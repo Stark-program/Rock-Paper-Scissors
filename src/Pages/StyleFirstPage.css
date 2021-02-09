@@ -1,0 +1,38 @@
+html,
+body {
+  height: 100vh;
+}
+.firstPage,
+.row {
+  height: 100vh;
+}
+.humanBtn {
+  margin-left: 2rem;
+  margin-top: 20px;
+}
+.computerBtn {
+  margin-top: 20px;
+}
+.humanBtn,
+.computerBtn {
+  width: 250px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 3rem;
+  color: firebrick;
+}
+.user {
+  text-align: center;
+  height: 100%;
+  position: relative;
+}
+.userForm {
+  vertical-align: middle;
+  margin-top: 150px;
+}
+.userBtn,
+.userField {
+  margin-left: 10px;
+}
