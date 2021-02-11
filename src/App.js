@@ -1,9 +1,10 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import FirstPage from "./Pages/FirstPage";
 import ComputerVsPlayer from "./Pages/ComputervsPlayer";
+import PlayerVsPlayer from "./Pages/PlayerVsPlayer";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         path="/Pages/ComputervsPlayer"
         component={ComputerVsPlayer}
       />
+      <Route exact path="/Pages/PlayerVsPlayer" component={PlayerVsPlayer} />
     </div>
   );
 }

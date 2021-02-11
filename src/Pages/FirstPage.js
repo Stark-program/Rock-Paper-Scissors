@@ -1,16 +1,22 @@
 import "./StyleFirstPage.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useState } from "react";
-
 import { Link } from "react-router-dom";
 
 function FirstPage() {
   const [playerName, setPlayerName] = useState("");
   const handleClick = () => {
     var name = playerName;
-    localStorage.setItem("name", name);
-
-    console.log(playerName);
+    sessionStorage.setItem("name", name);
+  };
+  const playerHandleClick = () => {
+    var name = playerName;
+    function checkStorage() {
+      if ("name" in sessionStorage) {
+        sessionStorage.setItem("name2", name);
+      } else sessionStorage.setItem("name", name);
+    }
+    checkStorage();
   };
   var storedValue = localStorage.getItem("name");
   console.log(storedValue);
@@ -32,14 +38,7 @@ function FirstPage() {
                   onChange={(e) => setPlayerName(e.target.value)}
                 />
               </label>
-              {/* <button
-                
-                type="button"
-                className="computerBtn btn btn-outline-primary"
-                onClick={handleClick}
-              >
-                Play The Computer
-              </button> */}
+
               <Link
                 to="/Pages/ComputervsPlayer"
                 className="computerBtn btn btn-outline-primary"
@@ -47,13 +46,13 @@ function FirstPage() {
               >
                 Play the Computer
               </Link>
-              <button
-                className="humanBtn btn btn-outline-primary"
-                type="button"
-                onClick={() => console.log(playerName)}
+              <Link
+                to="/Pages/PlayerVsPlayer"
+                className="computerBtn btn btn-outline-primary"
+                onClick={playerHandleClick}
               >
                 Play a Human
-              </button>
+              </Link>
             </form>
           </div>
         </div>
