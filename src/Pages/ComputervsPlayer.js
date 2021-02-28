@@ -1,7 +1,6 @@
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useState, useEffect } from "react";
-import { subscribeToTimer } from "../Backend/client-code";
 
 function ComputerVsPlayer() {
   const [computerList, setComputerList] = useState("");
@@ -27,13 +26,6 @@ function ComputerVsPlayer() {
   const handleClick = () => {
     let computerValue = computerRandomChoice();
     setComputerList(computerValue);
-    subscribeToTimer((err, timestamp) => {
-      if (err) {
-        console.log(err);
-      } else {
-        setTime(timestamp);
-      }
-    });
   };
 
   //count for points
@@ -62,7 +54,9 @@ function ComputerVsPlayer() {
   // winner code
   useEffect(() => {
     if (playerCount >= 3) {
-      alert(sessionStorage.getItem("name") + " " + "Wins!");
+      setTimeout(function () {
+        alert(sessionStorage.getItem("Player One") + " " + "Wins!");
+      }, 200);
       setPlayerCount(0);
       setComputerCount(0);
       setPlayerList("");
@@ -70,7 +64,9 @@ function ComputerVsPlayer() {
     }
 
     if (computerCount >= 3) {
-      alert("Computer Wins!");
+      setTimeout(function () {
+        alert("Computer Wins!");
+      }, 200);
       setPlayerCount(0);
       setComputerCount(0);
       setPlayerList("");
@@ -120,7 +116,7 @@ function ComputerVsPlayer() {
         <div className="row">
           <div className="col-sm-6">
             <h4 className="titles">
-              {sessionStorage.getItem("name")}
+              {sessionStorage.getItem("Player One")}
               <span className="count">{playerCount}</span>
             </h4>
             <div>

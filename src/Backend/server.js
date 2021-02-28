@@ -1,23 +1,28 @@
-// const app = require("express")();
+const app = require("express")();
+const http = require("http").createServer(app);
 
-const { Server } = require("socket.io");
+const io = require("socket.io")(http);
+var path = require("path");
 
-// const httpServer = require("http").createServer(app);
-const io = require("socket.io")();
-
-io.on("connection", (client) => {
-  client.on("subscribeToTimer", (interval) => {
-    console.log("client is subscribing to timer with interval ", interval);
-    setInterval(() => {
-      client.emit("timer", new Date());
-    }, interval);
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../App.js"));
+});
+io.on("connection", (socket) => {
+  io.emit("test", "Testing Emit");
+  socket.emit("user", socket.id);
+  console.log(socket.id);
+  socket.on("rock", () => {
+    socket.emit("choseRock", " Chose Rock");
   });
-  client.on("disconnect", (reason) => {
-    console.log("client has discconected because of ", reason);
+  socket.on("paper", () => {
+    socket.emit("chosePaper", " Chose Paper");
+  });
+  socket.on("scissors", () => {
+    socket.emit("choseScissors", " Chose Scissors");
   });
 });
 
 const port = 3001;
-io.listen(port);
-
-console.log("listening on port ", port);
+http.listen(port, () => {
+  console.log("listening on port " + port);
+});

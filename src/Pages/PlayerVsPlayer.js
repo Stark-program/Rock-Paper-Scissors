@@ -1,98 +1,91 @@
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useState, useEffect } from "react";
-import { subscribeToTimer } from "../Backend/client-code";
+
+import {
+  connectedUser,
+  isItRock,
+  isItPaper,
+  isItScissors,
+} from "../Backend/client-code";
 
 function PlayerVsPlayer() {
-  const [computerList, setComputerList] = useState("");
+  const [playerTwoList, setPlayerTwoList] = useState("");
   const [playerList, setPlayerList] = useState("");
   const [playerCount, setPlayerCount] = useState(0);
-  const [computerCount, setComputerCount] = useState(0);
+  const [playerTwoCount, setPlayerTwoCount] = useState(0);
   const [time, setTime] = useState("no timestamp yet");
 
-  var rock = "👊";
-  var paper = "✋";
-  var scissors = "✌️";
+  // Socket stuff
 
-  const computerSelectionArr = [rock, paper, scissors];
+  useEffect(() => {
+    connectedUser();
+  }, []);
 
-  // random computer choice code
-  const computerRandomChoice = () => {
-    let randomArr =
-      computerSelectionArr[
-        Math.floor(Math.random() * computerSelectionArr.length)
-      ];
-    return randomArr;
-  };
-  const handleClick = () => {
-    let computerValue = computerRandomChoice();
-    setComputerList(computerValue);
-    subscribeToTimer((err, timestamp) => {
-      if (err) {
-        console.log(err);
-      } else {
-        setTime(timestamp);
-      }
-    });
-  };
+  // Player Two Logic
+
+  const handleClick = () => {};
 
   //count for points
 
   useEffect(() => {
-    if (playerList === "✌️" && computerList === "👊") {
-      return setComputerCount(computerCount + 1);
+    if (playerList === "✌️" && playerTwoList === "👊") {
+      return setPlayerTwoCount(playerTwoCount + 1);
     }
-    if (playerList === "✋" && computerList === "✌️") {
-      return setComputerCount(computerCount + 1);
+    if (playerList === "✋" && playerTwoList === "✌️") {
+      return setPlayerTwoCount(playerTwoCount + 1);
     }
-    if (playerList === "👊" && computerList === "✋") {
-      return setComputerCount(computerCount + 1);
+    if (playerList === "👊" && playerTwoList === "✋") {
+      return setPlayerTwoCount(playerTwoCount + 1);
     }
-    if (playerList === "👊" && computerList === "✌️") {
+    if (playerList === "👊" && playerTwoList === "✌️") {
       setPlayerCount(playerCount + 1);
     }
-    if (playerList === "✋" && computerList === "👊") {
+    if (playerList === "✋" && playerTwoList === "👊") {
       setPlayerCount(playerCount + 1);
     }
-    if (playerList === "✌️" && computerList === "✋") {
+    if (playerList === "✌️" && playerTwoList === "✋") {
       setPlayerCount(playerCount + 1);
     }
-  }, [computerList, playerList]);
+  }, [playerTwoList, playerList]);
 
   // winner code
   useEffect(() => {
     if (playerCount >= 3) {
-      alert(localStorage.getItem("name") + " " + "Wins!");
+      alert(sessionStorage.getItem("Player One") + " " + "Wins!");
       setPlayerCount(0);
-      setComputerCount(0);
+      setPlayerTwoCount(0);
       setPlayerList("");
-      setComputerList("");
+      setPlayerTwoList("");
     }
 
-    if (computerCount >= 3) {
-      alert("Computer Wins!");
+    if (playerTwoCount >= 3) {
+      alert(sessionStorage.getItem("Player Two") + " " + "Wins!");
       setPlayerCount(0);
-      setComputerCount(0);
+      setPlayerTwoCount(0);
       setPlayerList("");
-      setComputerList("");
+      setPlayerTwoList("");
     }
-  }, [computerCount, playerCount]);
+  }, [playerTwoCount, playerCount]);
 
   return (
     <div className="App">
       <button
+        id="rock"
         type="button"
         className="selection"
         value="👊"
         onClick={(e) => {
           let playerValue = e.target.value;
           setPlayerList(playerValue);
-          handleClick();
+
+          isItRock();
         }}
       >
         👊
       </button>
       <button
+        id="paper"
         type="button"
         className="selection"
         value="✋"
@@ -100,11 +93,14 @@ function PlayerVsPlayer() {
           let playerValue = e.target.value;
           setPlayerList(playerValue);
           handleClick();
+
+          isItPaper();
         }}
       >
         ✋
       </button>
       <button
+        id="scissors"
         type="button"
         className="selection"
         value="✌️"
@@ -112,6 +108,8 @@ function PlayerVsPlayer() {
           let playerValue = e.target.value;
           setPlayerList(playerValue);
           handleClick();
+
+          isItScissors();
         }}
       >
         ✌️
@@ -120,7 +118,7 @@ function PlayerVsPlayer() {
         <div className="row">
           <div className="col-sm-6">
             <h4 className="titles">
-              {sessionStorage.getItem("name")}
+              {sessionStorage.getItem("Player One")}
               <span className="count">{playerCount}</span>
             </h4>
             <div>
@@ -131,12 +129,12 @@ function PlayerVsPlayer() {
           </div>
           <div className="col-sm-6">
             <h4 className="titles">
-              {sessionStorage.getItem("name2")}
-              <span className="count">{computerCount}</span>
+              {sessionStorage.getItem("Player Two")}
+              <span className="count">{playerTwoCount}</span>
             </h4>
             <div id="computerPlayer">
               <ul>
-                <li className="listItem">{computerList}</li>
+                <li className="listItem">{playerTwoList}</li>
               </ul>
             </div>
           </div>

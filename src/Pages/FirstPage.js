@@ -7,19 +7,18 @@ function FirstPage() {
   const [playerName, setPlayerName] = useState("");
   const handleClick = () => {
     var name = playerName;
-    sessionStorage.setItem("name", name);
+    sessionStorage.setItem("Player One", name);
   };
   const playerHandleClick = () => {
     var name = playerName;
     function checkStorage() {
-      if ("name" in sessionStorage) {
-        sessionStorage.setItem("name2", name);
-      } else sessionStorage.setItem("name", name);
+      if ("Player One" in sessionStorage) {
+        sessionStorage.setItem("Player Two", name);
+      } else sessionStorage.setItem("Player One", name);
     }
     checkStorage();
   };
   var storedValue = localStorage.getItem("name");
-  console.log(storedValue);
 
   return (
     <div className="firstPage">
