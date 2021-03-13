@@ -52,7 +52,7 @@ function PlayerVsPlayer() {
   // winner code
   useEffect(() => {
     if (playerCount >= 3) {
-      alert(sessionStorage.getItem("Player One") + " " + "Wins!");
+      alert(localStorage.getItem("Player One") + " " + "Wins!");
       setPlayerCount(0);
       setPlayerTwoCount(0);
       setPlayerList("");
@@ -60,7 +60,7 @@ function PlayerVsPlayer() {
     }
 
     if (playerTwoCount >= 3) {
-      alert(sessionStorage.getItem("Player Two") + " " + "Wins!");
+      alert(localStorage.getItem("Player Two") + " " + "Wins!");
       setPlayerCount(0);
       setPlayerTwoCount(0);
       setPlayerList("");
@@ -118,7 +118,7 @@ function PlayerVsPlayer() {
         <div className="row">
           <div className="col-sm-6">
             <h4 className="titles">
-              {sessionStorage.getItem("Player One")}
+              {localStorage.getItem("Player One")}
               <span className="count">{playerCount}</span>
             </h4>
             <div>
@@ -129,7 +129,7 @@ function PlayerVsPlayer() {
           </div>
           <div className="col-sm-6">
             <h4 className="titles">
-              {sessionStorage.getItem("Player Two")}
+              {localStorage.getItem("Player Two")}
               <span className="count">{playerTwoCount}</span>
             </h4>
             <div id="computerPlayer">

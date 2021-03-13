@@ -55,7 +55,7 @@ function ComputerVsPlayer() {
   useEffect(() => {
     if (playerCount >= 3) {
       setTimeout(function () {
-        alert(sessionStorage.getItem("Player One") + " " + "Wins!");
+        alert(localStorage.getItem("Player One") + " " + "Wins!");
       }, 200);
       setPlayerCount(0);
       setComputerCount(0);
@@ -116,7 +116,7 @@ function ComputerVsPlayer() {
         <div className="row">
           <div className="col-sm-6">
             <h4 className="titles">
-              {sessionStorage.getItem("Player One")}
+              {localStorage.getItem("Player One")}
               <span className="count">{playerCount}</span>
             </h4>
             <div>

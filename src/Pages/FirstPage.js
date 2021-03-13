@@ -2,21 +2,23 @@ import "./StyleFirstPage.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { joinRoom } from "../Backend/client-code";
 
 function FirstPage() {
   const [playerName, setPlayerName] = useState("");
   const handleClick = () => {
     var name = playerName;
-    sessionStorage.setItem("Player One", name);
+    localStorage.setItem("Player One", name);
   };
   const playerHandleClick = () => {
     var name = playerName;
     function checkStorage() {
-      if ("Player One" in sessionStorage) {
-        sessionStorage.setItem("Player Two", name);
-      } else sessionStorage.setItem("Player One", name);
+      if ("Player One" in localStorage) {
+        localStorage.setItem("Player Two", name);
+      } else localStorage.setItem("Player One", name);
     }
     checkStorage();
+    joinRoom();
   };
   var storedValue = localStorage.getItem("name");
 

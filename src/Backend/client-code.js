@@ -6,16 +6,18 @@ const playerOne = socket.id;
 console.log(playerOne);
 
 function connectedUser() {
-  socket.on("user", (playerOne) => {
-    sessionStorage.setItem("playerOneId", playerOne);
-    console.log(playerOne + " is player one");
+  socket.on("user", (id) => {
+    if ("Player One" in localStorage) {
+      localStorage.setItem("PlayerTwoId", id);
+    } else localStorage.setItem("PlayerOneId", id);
+    console.log(id + " is playing");
   });
 }
 
 function isItRock() {
   socket.emit("rock");
   socket.on("choseRock", (test) => {
-    console.log(sessionStorage.getItem("Player One") + test);
+    console.log(localStorage.getItem("Player One") + test);
   });
   socket.on("test", (test) => {
     console.log(test);
@@ -25,7 +27,7 @@ function isItRock() {
 function isItPaper() {
   socket.emit("paper");
   socket.on("chosePaper", (test) => {
-    console.log(sessionStorage.getItem("Player One") + test);
+    console.log(localStorage.getItem("Player One") + test);
   });
   socket.on("test", (test) => {
     console.log(test);
@@ -36,7 +38,7 @@ function isItScissors() {
   socket.emit("scissors");
 
   socket.on("choseScissors", (test) => {
-    console.log(sessionStorage.getItem("Player One") + test);
+    console.log(localStorage.getItem("Player One") + test);
   });
   socket.on("test", (test) => {
     console.log(test);
@@ -46,4 +48,12 @@ socket.on("test", (test) => {
   console.log(test);
 });
 
-export { connectedUser, isItRock, isItPaper, isItScissors };
+function joinRoom() {
+  socket.emit("joinroom", "Game");
+}
+socket.on("clearStorage", function () {
+  console.log("event hear");
+  localStorage.clear();
+});
+
+export { connectedUser, isItRock, isItPaper, isItScissors, joinRoom };
