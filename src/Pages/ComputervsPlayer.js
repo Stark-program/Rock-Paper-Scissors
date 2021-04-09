@@ -1,13 +1,20 @@
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useState, useEffect } from "react";
+import { socket } from "../Backend/client-code";
 
 function ComputerVsPlayer() {
   const [computerList, setComputerList] = useState("");
   const [playerList, setPlayerList] = useState("");
   const [playerCount, setPlayerCount] = useState(0);
   const [computerCount, setComputerCount] = useState(0);
-  const [time, setTime] = useState("no timestamp yet");
+
+  const [playerOne, setPlayerOne] = useState("");
+
+  // player one name from server
+  // socket.on("player one", (name) => {
+  //   setPlayerOne(name);
+  // });
 
   var rock = "👊";
   var paper = "✋";
@@ -55,7 +62,7 @@ function ComputerVsPlayer() {
   useEffect(() => {
     if (playerCount >= 3) {
       setTimeout(function () {
-        alert(localStorage.getItem("Player One") + " " + "Wins!");
+        alert();
       }, 200);
       setPlayerCount(0);
       setComputerCount(0);
@@ -116,7 +123,7 @@ function ComputerVsPlayer() {
         <div className="row">
           <div className="col-sm-6">
             <h4 className="titles">
-              {localStorage.getItem("Player One")}
+              {playerOne}
               <span className="count">{playerCount}</span>
             </h4>
             <div>
@@ -135,9 +142,6 @@ function ComputerVsPlayer() {
                 <li className="listItem">{computerList}</li>
               </ul>
             </div>
-          </div>
-          <div>
-            <p>This is the time example: {time} </p>
           </div>
         </div>
       </div>

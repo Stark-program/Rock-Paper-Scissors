@@ -1,28 +1,19 @@
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useState, useEffect } from "react";
-
-import {
-  connectedUser,
-  isItRock,
-  isItPaper,
-  isItScissors,
-} from "../Backend/client-code";
+import { socket } from "../Backend/client-code";
 
 function PlayerVsPlayer() {
   const [playerTwoList, setPlayerTwoList] = useState("");
   const [playerList, setPlayerList] = useState("");
   const [playerCount, setPlayerCount] = useState(0);
   const [playerTwoCount, setPlayerTwoCount] = useState(0);
-  const [time, setTime] = useState("no timestamp yet");
+  const [playerOneName, setPlayerOneName] = useState("");
+  const [playerTwoName, setPlayerTwoName] = useState("");
 
-  // Socket stuff
-
-  useEffect(() => {
-    connectedUser();
-  }, []);
-
-  // Player Two Logic
+  // Player Names from server
+  socket.on("player one", (name) => setPlayerOneName(name));
+  socket.on("player two", (name) => setPlayerTwoName(name));
 
   const handleClick = () => {};
 
@@ -52,7 +43,7 @@ function PlayerVsPlayer() {
   // winner code
   useEffect(() => {
     if (playerCount >= 3) {
-      alert(localStorage.getItem("Player One") + " " + "Wins!");
+      alert();
       setPlayerCount(0);
       setPlayerTwoCount(0);
       setPlayerList("");
@@ -60,7 +51,7 @@ function PlayerVsPlayer() {
     }
 
     if (playerTwoCount >= 3) {
-      alert(localStorage.getItem("Player Two") + " " + "Wins!");
+      alert();
       setPlayerCount(0);
       setPlayerTwoCount(0);
       setPlayerList("");
@@ -78,8 +69,6 @@ function PlayerVsPlayer() {
         onClick={(e) => {
           let playerValue = e.target.value;
           setPlayerList(playerValue);
-
-          isItRock();
         }}
       >
         👊
@@ -93,8 +82,6 @@ function PlayerVsPlayer() {
           let playerValue = e.target.value;
           setPlayerList(playerValue);
           handleClick();
-
-          isItPaper();
         }}
       >
         ✋
@@ -108,8 +95,6 @@ function PlayerVsPlayer() {
           let playerValue = e.target.value;
           setPlayerList(playerValue);
           handleClick();
-
-          isItScissors();
         }}
       >
         ✌️
@@ -118,7 +103,7 @@ function PlayerVsPlayer() {
         <div className="row">
           <div className="col-sm-6">
             <h4 className="titles">
-              {localStorage.getItem("Player One")}
+              {playerOneName}
               <span className="count">{playerCount}</span>
             </h4>
             <div>
@@ -129,7 +114,7 @@ function PlayerVsPlayer() {
           </div>
           <div className="col-sm-6">
             <h4 className="titles">
-              {localStorage.getItem("Player Two")}
+              {playerTwoName}
               <span className="count">{playerTwoCount}</span>
             </h4>
             <div id="computerPlayer">
@@ -137,9 +122,6 @@ function PlayerVsPlayer() {
                 <li className="listItem">{playerTwoList}</li>
               </ul>
             </div>
-          </div>
-          <div>
-            <p>This is the time example: {time} </p>
           </div>
         </div>
       </div>

@@ -36,3 +36,6 @@ body {
 .userField {
   margin-left: 10px;
 }
+.userField {
+  width: 150px;
+}
